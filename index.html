@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Zeesu MapWeb</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo">Zeesu MapWeb</div>
+
+        <nav>
+            <div class="nav-links">
+                <a href="#" class="nav-link active">Home</a>
+
+                <div class="dropdown">
+                    <a href="#" class="nav-link dropdown-toggle">
+                        Places <i class="fas fa-chevron-down" style="font-size: 0.75rem;"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-location"></i>
+                            Current location
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-location"></i>
+                            Home location
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-location"></i>
+                            Work location
+                        </a>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <a href="#" class="nav-link dropdown-toggle">
+                        Vehicles <i class="fas fa-chevron-down" style="font-size: 0.75rem;"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-bike"></i>
+                            Bike
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-car"></i>
+                            Car
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-bus"></i>
+                            Bus
+                        </a>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <a href="#" class="nav-link dropdown-toggle">
+                        Services <i class="fas fa-chevron-down" style="font-size: 0.75rem;"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-code"></i>
+                            Web Development
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-mobile-alt"></i>
+                            Mobile Apps
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-paint-brush"></i>
+                            UI/UX Design
+                        </a>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <a href="#" class="nav-link dropdown-toggle">
+                        Products <i class="fas fa-chevron-down" style="font-size: 0.75rem;"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-shirt"></i>
+                            Zeesu Royalist T-Shirt
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-user-tie"></i>
+                            Zeesu Royalist Jackets
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-tags"></i>
+                            Zeesu Royalist Stickers
+                        </a>
+                    </div>
+                </div>
+
+                <a href="https://www.google.com/search?q=zeesu+royalist" class="nav-link">About Us</a>
+                <a href="https://www.google.com/search?q=zeesu+royalist" target="blank" class="nav-link">Contact</a>
+            </div>
+
+            <button class="login-button"></button>
+
+            <button class="mobile-menu-button">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- side baar -->
+    <div class="container">
+        <aside>
+            <div class="sidebar-header">
+                <h2>
+                    <i class="fas fa-calculator"></i>
+                    Distance Calculator
+                </h2>
+            </div>
+
+            <div class="form-group">
+                <label for="from" class="form-label">
+                    <i class="fas fa-map-marker-alt"></i>
+                    From Location:
+                </label>
+                <div class="input-group">
+                    <i class="fas fa-map-marker-alt input-icon"></i>
+                    <input type="text" id="from" class="form-control" placeholder="Enter starting location..">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="to" class="form-label">
+                    <i class="fas fa-flag"></i>
+                    To Destination:
+                </label>
+                <div class="input-group">
+                    <i class="fas fa-flag input-icon"></i>
+                    <input type="text" id="to" class="form-control" placeholder="Enter destination..">
+                </div>
+            </div>
+
+            <button class="calculate-btn" onclick="calculateDistance()">
+                <i class="fas fa-calculator"></i>
+                Calculate Distance
+            </button>
+
+            <div id="result" class="result-container fade-in">
+                <div class="result-header">
+                    <i class="fas fa-info-circle"></i>
+                    <h3>Distance Information</h3>
+                </div>
+                <div class="result-content">
+                    <div class="result-item">
+                        <div class="result-label">From</div>
+                        <div class="result-value" id="result-from">-</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-label">To</div>
+                        <div class="result-value" id="result-to">-</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-label">Distance</div>
+                        <div class="result-value distance-value" id="result-distance">-</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-label">Estimated Time</div>
+                        <div class="result-value" id="result-time">-</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="Adds-box">
+                <div class="add-logo">
+                    <p>Add</p>
+                </div>
+                <a href="https://zeesu-royalist.github.io">
+                    <video src="add.mp4" autoplay muted loop playsinline></video>
+                </a>
+            </div>
+
+
+        </aside>
+
+
+
+        <main>
+            <div class="map-container">
+                <div id="map"></div>
+                <div class="map-controls">
+                    <button class="view-toggle active" id="standard-view">
+                        <i class="fas fa-map"></i>
+                        Standard
+                    </button>
+                    <button class="view-toggle" id="satellite-view">
+                        <i class="fas fa-satellite"></i>
+                        Satellite
+                    </button>
+                    <button class="view-toggle" id="terrain-view">
+                        <i class="fas fa-mountain"></i>
+                        Terrain
+                    </button>
+                </div>
+            </div>
+
+            <div class="features-section">
+                <div class="section-header">
+                    <h2 class="section-title">Advanced Features</h2>
+                    <a href="#" class="view-all">
+                        View All
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-route"></i>
+                        </div>
+                        <h3 class="feature-title">Route Optimization</h3>
+                        <p class="feature-description">Find the most efficient path between multiple locations with our
+                            advanced routing algorithms.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-traffic-light"></i>
+                        </div>
+                        <h3 class="feature-title">Real-time Traffic</h3>
+                        <p class="feature-description">Get live traffic updates and avoid congestion with our real-time
+                            data integration.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <h3 class="feature-title">Multi-layer Maps</h3>
+                        <p class="feature-description">Overlay different data layers to gain deeper insights into your
+                            geographical data.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <section class="intro-section">
+        <h2 class="intro-title">Our Popular Websites</h2>
+        <p class="intro-text">Also check out our other popular websites that make your work easy</p>
+    </section>
+
+    <section class="cards-container">
+        <a href="https://zeesu-royalist.github.io/Max/#" class="card">
+            <img src="c1.jpeg" alt="Map Image">
+            <h3>ZeesuMax</h3>
+            <p>Entertain your day by checking out our adventurous video and make you day happy and special.</p>
+        </a>
+
+        <a href="" class="card">
+            <img src="c2.jpeg" alt="Tech Image">
+            <h3>ZeesuVidion AI</h3>
+            <p>Transforming your imagination into stunning visual art with the power of artificial intelligence with
+                speed.</p>
+        </a>
+
+        <a href="https://zeesu-royalist.github.io/Lib/" class="card">
+            <img src="c3.jpeg" alt="Nature Image">
+            <h3>ZeesuLib</h3>
+            <p>Premium platform for book lovers to discover and download their favorite books in PDF format.</p>
+        </a>
+
+        <a href="" class="card">
+            <img src="c4.jpeg" alt="Tech Image">
+            <h3>ZeesuXen AI</h3>
+            <p>Empowering conversations with intelligent AI technology, and learn from them and become a master in AI
+            </p>
+        </a>
+
+        <a href="https://zeesu-royalist.github.io/Verse/#" class="card">
+            <img src="c5.jpeg" alt="Nature Image">
+            <h3>ZeesuVerse</h3>
+            <p>Discover the latest trends, shop effortlessly, and enjoy unbeatable deals delivered right to your
+                doorstep.</p>
+        </a>
+    </section>
+
+
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section footer-about">
+                <h3>Powered by</h3>
+                <p>The Zeesu Royalist Company is a forward-thinking provider of innovative geographic and tech
+                    solutions. We deliver reliable and high-quality services to help clients navigate and optimize their
+                    spatial and digital challenges worldwide.</p>
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/zeesu_royalist/" target="blank"><i
+                            class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/mohammad-jishan-4361972ba/" target="blank"><i
+                            class="fab fa-linkedin-in"></i></a>
+                    <a href="https://x.com/zeesuroyalist" target="blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.facebook.com/p/Zeesu-Royalist-100064169071412/" target="blank"><i
+                            class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.youtube.com/@zeesu_royalist" target="blank"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-section footer-links">
+                <h3>Other Websites</h3>
+                <ul>
+                    <li><a href="" target="blank">Zeesu ReTouch</a></li>
+                    <li><a href="" target="blank">Zeesu WordTest</a></li>
+                    <li><a href="" target="blank">Zeesu Pixel</a></li>
+                    <li><a href="" target="blank">Zeesu News Cast</a></li>
+                    <li><a href="" target="blank">Zeesu NoteWeb</a></li>
+                    <li><a href="" target="blank">Zeesu Notify</a></li>
+                    <li><a href="" target="blank">Zeesu Fusion</a></li>
+                    <li><a href="" target="blank">Zeesu QR Studio</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section footer-contact">
+                <h3>Contact Info</h3>
+                <p><i class="fas fa-map-marker-alt"></i> i7/540 Kalka Ji, New Delhi, India</p>
+                <p><i class="fas fa-phone"></i> +91 9999730618</p>
+                <p><i class="fas fa-envelope"></i> rzeesu@gmail.com</p>
+                <p><i class="fas fa-clock"></i> Everytime.</p>
+                <p><i class="fab fa-google"></i> Google Check.</p>
+                <p><i class="fab fa-github"></i> GitHub Repo.</p>
+            </div>
+
+            <div class="footer-section footer-newsletter">
+                <h3>Newsletter</h3>
+                <p>Subscribe to our newsletter to receive updates on our latest services and promotions.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Enter your email" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="payment-methods">
+                <i class="fab fa-cc-visa"></i>
+                <i class="fab fa-cc-mastercard"></i>
+                <i class="fab fa-cc-amex"></i>
+                <i class="fab fa-cc-paypal"></i>
+                <i class="fab fa-cc-apple-pay"></i>
+            </div>
+            <p>&copy; 2025 Zeesu MapWeb.<br>All Rights Reserved. | <a href="#" style="color: #ddd;">Privacy Policy</a> |
+                <a href="#" style="color: #ddd;">Terms of Service</a>
+            </p>
+            <p style="margin-top:7px;font-style:italic;font-size:10px;color:#fdfdfd;">
+                Powered by The
+                <a href="https://www.google.com/search?q=zeesu+royalist" style="text-decoration:none;color:#ffffff;">
+                    Zeesu Royalist Company
+                </a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <script src="script.js"></script>
+
+</body>
+
+</html>
